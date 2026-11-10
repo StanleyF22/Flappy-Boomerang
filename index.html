@@ -230,6 +230,67 @@ function update(){
         }
 
         if(!pipe.passed && pipe.x + pipe.width < boomerang.x){
-            pipe.passed = true;
-            score++;
-            document.getElement
+    pipe.passed = true;
+    score++;
+    document.getElementById("score").innerText = score;
+}
+});
+
+while(pipes.length && pipes[0].x < -120){
+    pipes.shift();
+}
+}
+
+function draw(){
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    drawSun();
+
+    drawCloud(200,120);
+    drawCloud(600,180);
+    drawCloud(1000,130);
+
+    pipes.forEach(pipe=>{
+
+        ctx.fillStyle="#2E7D32";
+
+        ctx.fillRect(
+            pipe.x,
+            0,
+            pipe.width,
+            pipe.top
+        );
+
+        ctx.fillRect(
+            pipe.x,
+            canvas.height-pipe.bottom,
+            pipe.width,
+            pipe.bottom
+        );
+
+        ctx.font="40px Arial";
+        ctx.fillText("🌳",pipe.x+20,pipe.top-10);
+        ctx.fillText(
+            "🌳",
+            pipe.x+20,
+            canvas.height-pipe.bottom+50
+        );
+    });
+
+    drawGround();
+    drawBoomerang();
+}
+
+function gameLoop(){
+    update();
+    draw();
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
+</script>
+
+</body>
+</html>
+
